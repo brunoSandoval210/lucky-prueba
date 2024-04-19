@@ -1,0 +1,44 @@
+@if(users.length ==0){
+    <div>No hay usuarios</div>
+} @else{
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>DNI</th>
+                <th>SUELDO</th>
+                <th>FECHA DE CREACION</th>
+                <th>DEPARTAMENTO</th>
+                <th>ELIMINAR</th>
+                <th>ACTUALIZAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(user of users; track $index){
+                <tr>
+                    <td>{{user.usuario_id}}</td>
+                    <td>{{user.nombre}}</td>
+                    <td>{{user.apellido}}</td>
+                    <td>{{user.dni}}</td>
+                    <td>S/.{{user.sueldo}}</td>
+                    <td>{{ user.fechaCreacion | date: 'yyyy-MM-dd' }}</td>
+                    <td>{{user.departamento_id}}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm"
+                            (click)="onRemoveUser(user.usuario_id)">
+                            eliminar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-info btn-sm"
+                        (click)="onSelectdUser(user)">
+                            actualizar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

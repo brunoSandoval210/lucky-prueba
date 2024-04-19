@@ -1,0 +1,174 @@
+<div class="modal" tabindex="-1" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{(user.usuario_id>0)?'Actualizar Usuario':'Crear Usuario'}}</h5>
+          <button (click)="onOpenClose()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="onSubmit(userform)" #userform="ngForm">
+                <div>
+                    <input 
+                    placeholder="nombres" 
+                    name="nombre"
+                    [(ngModel)]="user.nombre" 
+                    class="form-control my-2"
+                    pattern="[a-zA-Z\s]+"
+                    minlength="5"
+                    maxlength="30"
+                    required
+                    #nombre="ngModel"> 
+                    @if(nombre.invalid && (nombre.dirty || nombre.touched)){
+                        @if(nombre.errors!['required']){
+                            <div class="alert alert-danger">
+                            El nombre es requerido
+                            </div>
+                        }
+                        @if(nombre.errors!['minlength']){
+                            <div class="alert alert-danger">
+                            El nombre debe tener al menos 5 caracteres
+                            </div>
+                        }
+                        @if(nombre.errors!['maxlength']){
+                            <div class="alert alert-danger">
+                            El nombre debe tener menos de 30 caracteres
+                            </div>
+                        }
+                        @if(nombre.errors!['pattern']){
+                            <div class="alert alert-danger">
+                            El nombre debe ser alfabético 
+                            </div>
+                        }
+                    }
+                </div>
+                <div>
+                    <input 
+                    placeholder="apellidos" 
+                    name="apellido"
+                    [(ngModel)]="user.apellido" 
+                    class="form-control my-2"
+                    minlength="5"
+                    maxlength="30"
+                    pattern="[a-zA-Z\s]+"
+                    required
+                    #apellido="ngModel">
+                    @if(apellido.invalid && (apellido.dirty || apellido.touched)){
+                        @if(apellido.errors!['required']){
+                            <div class="alert alert-danger">
+                            El apellido es requerido
+                            </div>
+                        }
+                        @if (apellido.errors!['minlength']) {
+                            <div class="alert alert-danger">
+                                El apellido debe tener al menos 5 caracteres
+                            </div>
+                        }
+                        @if(apellido.errors!['maxlength']){
+                            <div class="alert alert-danger">
+                            El apellido debe tener menos de 30 caracteres
+                            </div>
+                        }
+                        @if(apellido.errors!['pattern']){
+                            <div class="alert alert-danger">
+                            El apellido debe ser alfabético 
+                            </div>
+                        }
+                    }
+                </div>
+                <div>
+                    <input 
+                    placeholder="dni" 
+                    name="dni"
+                    [(ngModel)]="user.dni" 
+                    class="form-control my-2"
+                    minlength="8"
+                    maxlength="8"
+                    pattern="[0-9]{8}"
+                    required
+                    #dni="ngModel">
+                    @if(dni.invalid && (dni.dirty || dni.touched)){
+                        @if(dni.errors!['required']){
+                            <div class="alert alert-danger">
+                            El DNI es requerido
+                            </div>
+                        }
+                        @if (dni.errors!['minlength']) {
+                            <div class="alert alert-danger">
+                                El DNI debe tener al menos 8 caracteres
+                            </div>
+                        }
+                        @if(dni.errors!['maxlength']){
+                            <div class="alert alert-danger">
+                            El DNI debe tener menos de 8 caracteres
+                            </div>
+                        }
+                        @if(dni.errors!['pattern']){
+                            <div class="alert alert-danger">
+                            El Dni numerico
+                            </div>
+                        }
+                    }
+                </div>
+                <div>
+                    <input 
+                    placeholder="sueldo" 
+                    name="sueldo"
+                    [(ngModel)]="user.sueldo" 
+                    class="form-control my-2"
+                    pattern="[0-9]+"
+                    maxlength="5"
+                    required
+                    #sueldo="ngModel">
+                    @if(sueldo.invalid && (sueldo.dirty || sueldo.touched)){
+                        @if(sueldo.errors!['required']){
+                            <div class="alert alert-danger">
+                            El sueldo es requerido
+                            </div>
+                        }
+                        @if (sueldo.errors!['pattern']) {
+                            <div class="alert alert-danger">
+                                El sueldo debe ser numerico
+                            </div>
+                        }
+                        @if(dni.errors!['maxlength']){
+                            <div class="alert alert-danger">
+                            El sueldo maximo debe tener 5 digitos
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="departamento_id" class="form-label">Departamento</label>
+                        <select id="departamento_id" name="departamento_id" [(ngModel)]="user.departamento_id" class="form-select" required #departamento_id="ngModel">
+                            @for(departamento of departamentos; track $index){
+                                <option [value]="departamento.departamento_id">{{ departamento.nombre }}</option>
+                            }               
+                        </select>
+                    </div>
+                </div>
+                    
+                <div>
+                    <button type="submit" 
+                    class="btn btn-primary m-2" 
+                    [disabled]="userform.invalid"
+                    >
+                    {{(user.usuario_id>0)?'Actualizar Usuario':'Crear Usuario'}}
+                    </button>
+            
+                    <button type="button" 
+                    class="btn btn-secondary my-2" 
+                    (click)="onClear(userform)"
+                    >
+                    Limpiar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="onOpenClose()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

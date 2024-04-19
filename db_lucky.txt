@@ -1,0 +1,94 @@
+CREATE TABLE Departamento (
+    departamento_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    nombre VARCHAR(50),
+    fechaCreacion DATETIME DEFAULT GETDATE()
+);
+Go
+CREATE TABLE Usuario (
+    usuario_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    dni VARCHAR(20), 
+    sueldo DECIMAL(10, 2), 
+    fechaCreacion DATETIME DEFAULT GETDATE(),
+    departamento_id INT REFERENCES Departamento(departamento_id)
+);
+Go
+CREATE PROCEDURE insertarUsuario
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @dni VARCHAR(20), 
+    @sueldo DECIMAL(10, 2), 
+    @departamento_id INT
+AS 
+BEGIN
+    INSERT INTO Usuario (nombre, apellido, dni, sueldo, departamento_id) 
+    VALUES (@nombre, @apellido, @dni, @sueldo,@departamento_id);
+END
+GO
+CREATE PROCEDURE eliminarUsuario
+@usuario_id int
+AS BEGIN
+DELETE FROM Usuario WHERE usuario_id=@usuario_id
+END
+GO
+
+CREATE PROCEDURE actualizarUsuario
+@usuario_id int,
+@nombre VARCHAR(50),
+@apellido VARCHAR(50),
+@dni VARCHAR(20), 
+@sueldo DECIMAL(10, 2), 
+@departamento_id INT
+AS BEGIN
+UPDATE Usuario SET nombre=@nombre, apellido=@apellido,dni=@dni, sueldo=@sueldo,departamento_id=@departamento_id WHERE usuario_id=@usuario_id
+END
+GO
+
+CREATE PROCEDURE obtenerUsuarioPorId
+@usuario_id int
+AS BEGIN
+SELECT * FROM Usuario WHERE usuario_id=@usuario_id
+END
+GO
+
+CREATE PROCEDURE obtenerUsuarios
+AS BEGIN
+SELECT*FROM Usuario
+END
+GO
+CREATE PROCEDURE insertarDepartamento
+    @nombre VARCHAR(50)
+AS 
+BEGIN
+    INSERT INTO Departamento(nombre) 
+    VALUES (@nombre);
+END
+GO
+CREATE PROCEDURE eliminarDepartamento
+@departamento_id int
+AS BEGIN
+DELETE FROM Departamento WHERE departamento_id=@departamento_id
+END
+GO
+
+CREATE PROCEDURE obtenerDepartamentos
+AS BEGIN
+SELECT*FROM Departamento
+END
+GO
+
+CREATE PROCEDURE obtenerUsuariosDepartamento
+@departamento_id int
+AS BEGIN
+SELECT*FROM Usuario WHERE departamento_id=@departamento_id
+END
+GO
+
+CREATE PROCEDURE obtenerDepartamentoPorId
+@departamento_id int
+AS BEGIN
+SELECT * FROM Departamento WHERE departamento_id=@departamento_id
+END 
+GO
+
